@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HOTS-Drafter.iml" filepath="$PROJECT_DIR$/HOTS-Drafter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hotsdrafter/hotsdrafter.iml" filepath="$PROJECT_DIR$/hotsdrafter/hotsdrafter.iml" />
+    </modules>
+  </component>
+</project>
