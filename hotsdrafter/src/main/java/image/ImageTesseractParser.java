@@ -1,36 +1,46 @@
 package image;
 
+import net.sourceforge.lept4j.Pix;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.LoadLibs;
 import org.bytedeco.javacpp.*;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ComponentSampleModel;
+import java.awt.image.SampleModel;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
+import static net.sourceforge.lept4j.util.LeptUtils.convertImageToPix;
 import static org.bytedeco.javacpp.lept.*;
 import static org.bytedeco.javacpp.tesseract.*;
 
 public class ImageTesseractParser {
 
-    private TessBaseAPI api;
 
     public ImageTesseractParser(){
-        if(api == null) api = new TessBaseAPI();
-        ReadImage();
+
     }
 
-    public void ReadImage(){
-        BytePointer outText;
+    public String TesseractParseBufferedImage(BufferedImage image){
         File tessDataFolder = LoadLibs.extractTessResources("tessdata");
-        if (api.Init(tessDataFolder.getAbsolutePath(), "eng") != 0) {
-            System.err.println("Could not initialize tesseract.");
-            System.exit(1);
-        }
-        PIX image = pixRead("C:/Users/Odyssey/Pictures/hots/NAZEEBO2.png");
-        api.SetImage(image);
-        outText = api.GetUTF8Text();
-        System.out.println("OCR output:\n" + outText.getString());
-        api.End();
-        outText.deallocate();
-        pixDestroy(image);
-    }
 
+        Tesseract tesseract = new Tesseract();
+        tesseract.setDatapath(tessDataFolder.getAbsolutePath());
+        tesseract.setLanguage("eng");
+        String result = null;
+        try {
+            result = tesseract.doOCR(image);
+        } catch (TesseractException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

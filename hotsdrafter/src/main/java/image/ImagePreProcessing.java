@@ -14,10 +14,10 @@ public class ImagePreProcessing {
 
     }
 
-    public BufferedImage RotateImage(BufferedImage image, int radians){
+    public BufferedImage RotateImage(BufferedImage image, int radians, int y){
         double rotationRequired = Math.toRadians (radians);
         double locationX = image.getWidth() / 2;
-        double locationY = image.getHeight() / 2;
+        double locationY = image.getHeight() / 2 - y;
         AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
